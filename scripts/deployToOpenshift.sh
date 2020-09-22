@@ -25,24 +25,24 @@ mkdir -p ${MANIFESTS}
 cd ${MANIFESTS}
 echo "Installing Acme-Air in acme-air namespace ..."
 # Main service
-curl -o acmeair-mainservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-mainservice-java/ppc64le/manifests-openshift/acmeair-mainservice-route.yaml
-curl -o deploy-acmeair-mainservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-mainservice-java/ppc64le/manifests-openshift/deploy-acmeair-mainservice-java.yaml
+curl -o acmeair-mainservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-mainservice-java/master/manifests-openshift/acmeair-mainservice-route.yaml
+curl -o deploy-acmeair-mainservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-mainservice-java/master/manifests-openshift/deploy-acmeair-mainservice-java.yaml
 
 # Auth service
-curl -o acmeair-authservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-authservice-java/ppc64le/manifests-openshift/acmeair-authservice-route.yaml
-curl -o deploy-acmeair-authservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-authservice-java/ppc64le/manifests-openshift/deploy-acmeair-authservice-java.yaml
+curl -o acmeair-authservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-authservice-java/master/manifests-openshift/acmeair-authservice-route.yaml
+curl -o deploy-acmeair-authservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-authservice-java/master/manifests-openshift/deploy-acmeair-authservice-java.yaml
 
 # Customer service
-curl -o acmeair-customerservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-customerservice-java/ppc64le/manifests-openshift/acmeair-customerservice-route.yaml
-curl -o deploy-acmeair-customerservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-customerservice-java/ppc64le/manifests-openshift/deploy-acmeair-customerservice-java.yaml
+curl -o acmeair-customerservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-customerservice-java/master/manifests-openshift/acmeair-customerservice-route.yaml
+curl -o deploy-acmeair-customerservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-customerservice-java/master/manifests-openshift/deploy-acmeair-customerservice-java.yaml
 
 # Flight service
-curl -o acmeair-flightservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-flightservice-java/ppc64le/manifests-openshift/acmeair-flightservice-route.yaml
-curl -o deploy-acmeair-flightservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-flightservice-java/ppc64le/manifests-openshift/deploy-acmeair-flightservice-java.yaml
+curl -o acmeair-flightservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-flightservice-java/master/manifests-openshift/acmeair-flightservice-route.yaml
+curl -o deploy-acmeair-flightservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-flightservice-java/master/manifests-openshift/deploy-acmeair-flightservice-java.yaml
 
 # Booking service
-curl -o acmeair-bookingservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-bookingservice-java/ppc64le/manifests-openshift/acmeair-bookingservice-route.yaml
-curl -o deploy-acmeair-bookingservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-bookingservice-java/ppc64le/manifests-openshift/deploy-acmeair-bookingservice-java.yaml
+curl -o acmeair-bookingservice-route.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-bookingservice-java/master/manifests-openshift/acmeair-bookingservice-route.yaml
+curl -o deploy-acmeair-bookingservice-java.yaml https://raw.githubusercontent.com/ocp-power-demos/acmeair-bookingservice-java/master/manifests-openshift/deploy-acmeair-bookingservice-java.yaml
 
 # Update hostname in routes manifest
 echo "Patch hostname for routes"
