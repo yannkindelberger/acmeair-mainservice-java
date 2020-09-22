@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: acmeair-mainservice-java
-        image: acmeair-mainservice-java:latest
+        image: quay.io/powercloud/acmeair-mainservice-java:1.0
         ports:
         - containerPort: 9080
         - containerPort: 9443
