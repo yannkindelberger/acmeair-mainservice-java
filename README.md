@@ -11,7 +11,7 @@ This implementation can support running on a variety of runtime platforms includ
 ## Installing Acme Air on Openshift 4.x
 
 ```
-$ git clone https://github.com/ocp-power-demos/acmeair-mainservice-java
+$ git clone https://github.com/mmondics/acmeair-mainservice-java
 $ cd acmeair-mainservice-java
 $ ./scripts/deployToOpenshift.sh
 ```
