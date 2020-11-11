@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-MANIFESTS="/home/mmondics/acmeair-manifests"
+MANIFESTS="/root/acmeair-manifests"
 CLUSTER_DOMAIN=`oc -n openshift-ingress-operator get ingresscontrollers -o jsonpath='{.items[].status.domain}'`
 ROUTE_HOST="acmeair.${CLUSTER_DOMAIN}"
 
