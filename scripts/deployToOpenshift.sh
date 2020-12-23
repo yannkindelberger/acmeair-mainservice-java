@@ -16,11 +16,15 @@
 MANIFESTS="$PWD/acmeair-manifests"
 CLUSTER_DOMAIN=`oc -n openshift-ingress-operator get ingresscontrollers -o jsonpath='{.items[].status.domain}'`
 ROUTE_HOST="acmeair.${CLUSTER_DOMAIN}"
+CPU_ARCHITECTURE=`oc get node -o yaml | grep -m 1 kernelVersion | awk '{print $2}' |  cut -d. -f7`
+
 
 echo "Route Host=${ROUTE_HOST}"
+echo "CPU Architecture=${CPU_ARCHITECTURE}"
 oc new-project acme-air
 oc project acme-air
 
+rf -rf ${MANIFESTS}
 mkdir -p ${MANIFESTS}
 cd ${MANIFESTS}
 echo "Installing Acme-Air in acme-air namespace ..."
@@ -45,6 +49,14 @@ curl -o deploy-acmeair-flightservice-java.yaml https://raw.githubusercontent.com
 curl -o acmeair-bookingservice-route.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-bookingservice-java/master/manifests-openshift/acmeair-bookingservice-route.yaml
 curl -o deploy-acmeair-bookingservice-java.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-bookingservice-java/master/manifests-openshift/deploy-acmeair-bookingservice-java.yaml
 
+# Update image in deployment manifest
+echo "Patch image for deployments"
+sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml
+sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-authservice-java.yaml
+sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
+sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml
+sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml
+
 # Update hostname in routes manifest
 echo "Patch hostname for routes"
 sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-mainservice-route.yaml
@@ -52,7 +64,6 @@ sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-authservice-route.yaml
 sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-customerservice-route.yaml
 sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-flightservice-route.yaml
 sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-bookingservice-route.yaml
-
 
 oc create -f ${MANIFESTS}
 
