@@ -51,11 +51,11 @@ curl -o deploy-acmeair-bookingservice-java.yaml https://raw.githubusercontent.co
 
 # Update image in deployment manifest
 echo "Patch image for deployments"
-sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml
-sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-authservice-java.yaml
-sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
-sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml
-sed -i.bak "s@latests@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml
+sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml
+sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-authservice-java.yaml
+sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
+sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml
+sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml
 
 # Update hostname in routes manifest
 echo "Patch hostname for routes"
@@ -67,19 +67,7 @@ sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-bookingservice-route.y
 
 oc create -f ${MANIFESTS}
 
-# Update back to original routes manifest
-echo "Removing ${IMAGE_PREFIX}"
-sed -i.bak "s@${ROUTE_HOST}@_HOST_@" ${MANIFESTS}/acmeair-mainservice-route.yaml
-sed -i.bak "s@${ROUTE_HOST}@_HOST_@" ${MANIFESTS}/acmeair-authservice-route.yaml
-sed -i.bak "s@${ROUTE_HOST}@_HOST_@" ${MANIFESTS}/acmeair-customerservice-route.yaml
-sed -i.bak "s@${ROUTE_HOST}@_HOST_@" ${MANIFESTS}/acmeair-flightservice-route.yaml
-sed -i.bak "s@${ROUTE_HOST}@_HOST_@" ${MANIFESTS}/acmeair-bookingservice-route.yaml
-
-rm ${MANIFESTS}/acmeair-mainservice-route.yaml.bak
-rm ${MANIFESTS}/acmeair-authservice-route.yaml.bak
-rm ${MANIFESTS}/acmeair-customerservice-route.yaml.bak
-rm ${MANIFESTS}/acmeair-flightservice-route.yaml.bak
-rm ${MANIFESTS}/acmeair-bookingservice-route.yaml.bak
+rm ${MANIFESTS}/*.bak
 
 echo "========================================================================"
 echo "Acme Air Deployment complete. You can access the application now."
