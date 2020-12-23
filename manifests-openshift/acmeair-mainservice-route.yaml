@@ -3,7 +3,7 @@ kind: Route
 metadata:
   name: acmeair-main-route
   labels:
-    app.kubernetes.io/part-of: acmeair-mainservice
+    app.kubernetes.io/part-of: main-service
 spec:
   host: _HOST_
   path: /acmeair
