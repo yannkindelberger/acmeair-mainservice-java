@@ -24,7 +24,7 @@ echo "CPU Architecture=${CPU_ARCHITECTURE}"
 oc new-project acme-air
 oc project acme-air
 
-rf -rf ${MANIFESTS}
+rm -rf ${MANIFESTS}
 mkdir -p ${MANIFESTS}
 cd ${MANIFESTS}
 echo "Installing Acme-Air in acme-air namespace ..."
