@@ -50,12 +50,12 @@ curl -o acmeair-bookingservice-route.yaml https://raw.githubusercontent.com/yigi
 curl -o deploy-acmeair-bookingservice-java.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-bookingservice-java/master/manifests-openshift/deploy-acmeair-bookingservice-java.yaml
 
 # Update image in deployment manifest
-echo "Patch image for deployments"
-sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml
-sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-authservice-java.yaml
-sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
-sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml
-sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml
+# echo "Patch image for deployments"
+# sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml
+# sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-authservice-java.yaml
+# sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
+# sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml
+# sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml
 
 # Update hostname in routes manifest
 echo "Patch hostname for routes"
