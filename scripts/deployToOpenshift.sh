@@ -18,16 +18,22 @@ CLUSTER_DOMAIN=`oc -n openshift-ingress-operator get ingresscontrollers -o jsonp
 ROUTE_HOST="acmeair.${CLUSTER_DOMAIN}"
 CPU_ARCHITECTURE=`oc get node -o yaml | grep -m 1 kernelVersion | awk '{print $2}' |  cut -d. -f7`
 
+echo "========================"
 
 echo "Route Host=${ROUTE_HOST}"
 echo "CPU Architecture=${CPU_ARCHITECTURE}"
+
+echo "========================"
+
 oc new-project acme-air
 oc project acme-air
+echo "========================"
 
 rm -rf ${MANIFESTS}
 mkdir -p ${MANIFESTS}
 cd ${MANIFESTS}
-echo "Installing Acme-Air in acme-air namespace ..."
+
+echo "Downloading Acme-Air YAML files..."
 
 # Main service
 curl -o acmeair-mainservice-route.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-mainservice-java/master/manifests-openshift/acmeair-mainservice-route.yaml
@@ -58,19 +64,21 @@ curl -o deploy-acmeair-bookingservice-java.yaml https://raw.githubusercontent.co
 # sed -i.bak "s@latest@${CPU_ARCHITECTURE}@" ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml
 
 # Update hostname in routes manifest
-echo "Patch hostname for routes"
+# echo "Patch hostname for routes"
 sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-mainservice-route.yaml
 sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-authservice-route.yaml
 sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-customerservice-route.yaml
 sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-flightservice-route.yaml
 sed -i.bak "s@_HOST_@${ROUTE_HOST}@" ${MANIFESTS}/acmeair-bookingservice-route.yaml
 
+echo "========================"
+echo "Installing Acme-Air in acme-air project ..."
 oc create -f ${MANIFESTS}
 
 rm ${MANIFESTS}/*.bak
 
 echo "========================================================================"
 echo "Acme Air Deployment complete. You can access the application now."
-echo "NAMESPACE=acme-air"
+echo "Project=acme-air"
 echo "ACMEAIR URL=https://${ROUTE_HOST}/acmeair"
 echo "========================================================================"
