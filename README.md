@@ -10,26 +10,50 @@ This implementation can support running on a variety of runtime platforms includ
 
 ## Installing Acme Air on Openshift 4.x
 
+Podman Environment
 ```
-$ git clone https://github.com/mmondics/acmeair-mainservice-java
+$ yum install podman maven git -y
+
+$ mkdir acme-air
+$ cd acme-air
+$ git clone https://github.com/yigitpolat/acmeair-mainservice-java.git
+$ git clone https://github.com/yigitpolat/acmeair-authservice-java.git
+$ git clone https://github.com/yigitpolat/acmeair-customerservice-java.git
+$ git clone https://github.com/yigitpolat/acmeair-flightservice-java.git
+$ git clone https://github.com/yigitpolat/acmeair-bookingservice-java.git
+
 $ cd acmeair-mainservice-java
-$ ./scripts/deployToOpenshift.sh
-```
-Access the application when all the pods are in Running state:
-```
-$ oc get pods
-NAME                                      READY   STATUS    RESTARTS   AGE
-acmeair-authservice-58459f88c9-bdmt6      1/1     Running   0          2m50s
-acmeair-booking-db-66d696dfd4-5lw7k       1/1     Running   0          2m50s
-acmeair-bookingservice-7fdd8789c4-6h28l   1/1     Running   0          2m50s
-acmeair-customer-db-6f4d998ffb-qfb9w      1/1     Running   0          2m50s
-acmeair-customerservice-fffd899d5-27jb7   1/1     Running   0          2m50s
-acmeair-flight-db-54684fb648-sdvsl        1/1     Running   0          2m50s
-acmeair-flightservice-5566cc7d79-vnqgx    1/1     Running   0          2m50s
-acmeair-mainservice-7f846794d5-5nmk4      1/1     Running   0          2m50s
-```
-## Uninstalling the application
-The deployment of Acme Air creates the manifests file in the /root/acmeair-manifests directory. To uninstall the application, run the following command:
-```
-oc delete -f acmeair-manifests
+$ mvn clean package
+$ podman build -t docker.io/yigitpolat/acmeair-mainservice-java:$(uname -m) --format docker -f Dockerfile .
+$ podman push docker.io/yigitpolat/acmeair-mainservice-java:$(uname -m)
+
+$ cd ../acmeair-authservice-java
+$ mvn clean package
+$ podman build -t docker.io/yigitpolat/acmeair-authservice-java:$(uname -m) --format docker -f Dockerfile .
+$ podman push docker.io/yigitpolat/acmeair-authservice-java:$(uname -m)
+
+$ cd ../acmeair-customerservice-java
+$ mvn clean package
+$ podman build -t docker.io/yigitpolat/acmeair-customerservice-java:$(uname -m) --format docker -f Dockerfile .
+$ podman push docker.io/yigitpolat/acmeair-customerservice-java:$(uname -m)
+
+$ cd ../acmeair-flightservice-java
+$ mvn clean package
+$ podman build -t docker.io/yigitpolat/acmeair-flightservice-java:$(uname -m) --format docker -f Dockerfile .
+$ podman push docker.io/yigitpolat/acmeair-flightservice-java:$(uname -m)
+
+$ cd ../acmeair-bookingservice-java
+$ mvn clean package
+$ podman build -t docker.io/yigitpolat/acmeair-bookingservice-java:$(uname -m) --format docker -f Dockerfile .
+$ podman push docker.io/yigitpolat/acmeair-bookingservice-java:$(uname -m)
+
+oc login -u <username> -p <password> <api-endpoint>
+
+cd ../acmeair-mainservice-java/scripts
+sh deployToOpenShift.sh
+
+curl --insecure https://acmeair.apps.test.cluster.tr.com:443/booking/loader/load
+curl --insecure https://acmeair.apps.test.cluster.tr.com:443/flight/loader/load
+curl --insecure https://acmeair.apps.test.cluster.tr.com:443/customer/loader/load?numCustomers=10000
+
 ```
