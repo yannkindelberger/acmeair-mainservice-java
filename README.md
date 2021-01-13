@@ -47,13 +47,13 @@ $ mvn clean package
 $ podman build -t docker.io/yigitpolat/acmeair-bookingservice-java:$(uname -m) --format docker -f Dockerfile .
 $ podman push docker.io/yigitpolat/acmeair-bookingservice-java:$(uname -m)
 
-oc login -u <username> -p <password> <api-endpoint>
+$ oc login -u <username> -p <password> <api-endpoint>
 
-cd ../acmeair-mainservice-java/scripts
-sh deployToOpenShift.sh
+$ cd ../acmeair-mainservice-java/scripts
+$ sh deployToOpenShift.sh
 
-curl --insecure https://acmeair.apps.test.cluster.tr.com:443/booking/loader/load
-curl --insecure https://acmeair.apps.test.cluster.tr.com:443/flight/loader/load
-curl --insecure https://acmeair.apps.test.cluster.tr.com:443/customer/loader/load?numCustomers=10000
+$ curl --insecure https://acmeair.apps.test.cluster.tr.com:443/booking/loader/load
+$ curl --insecure https://acmeair.apps.test.cluster.tr.com:443/flight/loader/load
+$ curl --insecure https://acmeair.apps.test.cluster.tr.com:443/customer/loader/load?numCustomers=10000
 
 ```
