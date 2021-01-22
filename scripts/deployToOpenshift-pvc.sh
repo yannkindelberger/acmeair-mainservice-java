@@ -36,12 +36,12 @@ cd ${MANIFESTS}
 echo "Downloading Acme-Air YAML files..."
 
 # Main service
-curl -o acmeair-mainservice-route.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-mainservice-java/master/manifests-openshift-pvc/acmeair-mainservice-route.yaml
-curl -o deploy-acmeair-mainservice-java.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-mainservice-java/master/manifests-openshift-pvc/deploy-acmeair-mainservice-java.yaml
+curl -o acmeair-mainservice-route.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-mainservice-java/master/manifests-openshift/acmeair-mainservice-route.yaml
+curl -o deploy-acmeair-mainservice-java.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-mainservice-java/master/manifests-openshift/deploy-acmeair-mainservice-java.yaml
 
 # Auth service
-curl -o acmeair-authservice-route.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-authservice-java/master/manifests-openshift-pvc/acmeair-authservice-route.yaml
-curl -o deploy-acmeair-authservice-java.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-authservice-java/master/manifests-openshift-pvc/deploy-acmeair-authservice-java.yaml
+curl -o acmeair-authservice-route.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-authservice-java/master/manifests-openshift/acmeair-authservice-route.yaml
+curl -o deploy-acmeair-authservice-java.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-authservice-java/master/manifests-openshift/deploy-acmeair-authservice-java.yaml
 
 # Customer service
 curl -o acmeair-customerservice-route.yaml https://raw.githubusercontent.com/yigitpolat/acmeair-customerservice-java/master/manifests-openshift-pvc/acmeair-customerservice-route.yaml
