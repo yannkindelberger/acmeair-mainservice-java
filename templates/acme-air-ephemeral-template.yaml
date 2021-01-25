@@ -559,17 +559,51 @@ objects:
   - apiVersion: batch/v1
     kind: Job
     metadata:
-      name: load-database
+      name: load-db
     spec:
-      template:         
+      template:
         metadata:
-          name: load-database
+          name: load-db
         spec:
-          containers:
-          - name: load-database
+          initContainers:
+          - name: wait-for-booking-service
             image: ubi8/ubi
-            command: ["sh -c sleep 3600"]
-          restartPolicy: OnFailure    
+            args:
+            - /bin/sh
+            - -c
+            - >
+              set -x;
+              while [ $(curl -sw '%{http_code}' "$ACMEAIR_BOOKING_SERVICE_SERVICE_HOST:$ACMEAIR_BOOKING_SERVICE_PORT_9080_TCP_PORT" -o /dev/null) -ne 200 ]; do
+                sleep 15;
+              done
+          - name: wait-for-flight-service
+            image: ubi8/ubi
+            args:
+            - /bin/sh
+            - -c
+            - >
+              set -x;
+              while [ $(curl -sw '%{http_code}' "$ACMEAIR_FLIGHT_SERVICE_SERVICE_HOST:$ACMEAIR_FLIGHT_SERVICE_PORT_9080_TCP_PORT" -o /dev/null) -ne 200 ]; do
+                sleep 15;
+              done
+          - name: wait-for-customer-service
+            image: ubi8/ubi
+            args:
+            - /bin/sh
+            - -c
+            - >
+              set -x;
+              while [ $(curl -sw '%{http_code}' "$ACMEAIR_CUSTOMER_SERVICE_SERVICE_HOST:$ACMEAIR_CUSTOMER_SERVICE_PORT_9080_TCP_PORT" -o /dev/null) -ne 200 ]; do
+                sleep 15;
+              done
+          containers:
+          - name: load-db
+            image: ubi8/ubi
+            command: ["/bin/sh"]
+            args: ["-c", "curl --insecure https://acmeair.${DOMAIN}:443/booking/loader/load && 
+                          curl --insecure https://acmeair.${DOMAIN}:443/flight/loader/load && 
+                          curl --insecure https://acmeair.${DOMAIN}:443/customer/loader/load?numCustomers=10000"]
+          restartPolicy: OnFailure 
 parameters:
   - name: DOMAIN
     displayName: Domain Name
