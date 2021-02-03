@@ -1,4 +1,4 @@
-FROM open-liberty:kernel
+FROM image-registry.openshift-image-registry.svc:5000/acme/open-liberty
 
 COPY --chown=1001:0 src/main/liberty/config/server.xml /config/server.xml
 COPY --chown=1001:0 src/main/liberty/config/server.env /config/server.env
