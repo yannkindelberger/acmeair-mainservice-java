@@ -1,5 +1,6 @@
-FROM open-liberty:kernel
+# FROM open-liberty:kernel
 #FROM default-route-openshift-image-registry.apps.mplbank.mop.fr.ibm.com/acme/open-liberty
+FROM quay.io/abdouibm/open-liberty
 
 COPY --chown=1001:0 src/main/liberty/config/server.xml /config/server.xml
 COPY --chown=1001:0 src/main/liberty/config/server.env /config/server.env
